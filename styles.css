@@ -1,0 +1,221 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+}
+
+h1 {
+    text-align: center;
+    color: white;
+    margin-bottom: 40px;
+    font-size: 2.5em;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    letter-spacing: 2px;
+}
+
+.clock-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    margin-bottom: 20px;
+}
+
+.clock-card {
+    background: white;
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.95);
+}
+
+.clock-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+}
+
+.timezone-label {
+    font-size: 1.2em;
+    font-weight: 600;
+    color: #667eea;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.timezone-offset {
+    font-size: 0.9em;
+    color: #888;
+    margin-bottom: 15px;
+    font-weight: 500;
+}
+
+.digital-time {
+    font-size: 2.5em;
+    font-weight: bold;
+    color: #333;
+    font-family: 'Courier New', monospace;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.analog-clock {
+    width: 150px;
+    height: 150px;
+    border: 3px solid #667eea;
+    border-radius: 50%;
+    margin: 15px auto;
+    position: relative;
+    background: #f8f9fa;
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.clock-center {
+    width: 12px;
+    height: 12px;
+    background: #667eea;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+}
+
+.hand {
+    position: absolute;
+    bottom: 50%;
+    left: 50%;
+    transform-origin: bottom center;
+    border-radius: 10px;
+}
+
+.hour-hand {
+    width: 6px;
+    height: 35px;
+    background: #333;
+    margin-left: -3px;
+}
+
+.minute-hand {
+    width: 4px;
+    height: 50px;
+    background: #667eea;
+    margin-left: -2px;
+}
+
+.second-hand {
+    width: 2px;
+    height: 55px;
+    background: #ff6b6b;
+    margin-left: -1px;
+}
+
+.date-display {
+    font-size: 0.95em;
+    color: #666;
+    margin-top: 12px;
+    font-style: italic;
+}
+
+.time-format-toggle {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.toggle-btn {
+    background: white;
+    color: #667eea;
+    border: 2px solid #667eea;
+    padding: 12px 30px;
+    border-radius: 50px;
+    font-size: 1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.toggle-btn:hover {
+    background: #667eea;
+    color: white;
+    transform: scale(1.05);
+}
+
+.toggle-btn:active {
+    transform: scale(0.98);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 1.8em;
+        margin-bottom: 25px;
+    }
+
+    .clock-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 15px;
+    }
+
+    .clock-card {
+        padding: 20px;
+    }
+
+    .digital-time {
+        font-size: 2em;
+    }
+
+    .analog-clock {
+        width: 120px;
+        height: 120px;
+    }
+
+    .hour-hand {
+        height: 28px;
+    }
+
+    .minute-hand {
+        height: 40px;
+    }
+
+    .second-hand {
+        height: 44px;
+    }
+}
+
+@media (max-width: 480px) {
+    .clock-grid {
+        grid-template-columns: 1fr;
+    }
+
+    h1 {
+        font-size: 1.5em;
+    }
+
+    .digital-time {
+        font-size: 1.8em;
+    }
+}
