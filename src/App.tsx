@@ -9,6 +9,7 @@ import type {
   StorageLocation,
 } from './types/equipment';
 import { INITIAL_EQUIPMENT_DATA } from './data/mockEquipment';
+import type { OBVan } from './types/obvan';
 import { INITIAL_OB_VANS, INITIAL_CREW, INITIAL_TRIPS } from './data/mockOBVans';
 import { filterAndSortEquipment } from './utils/filterAndSort';
 import { FilterBar } from './components/FilterBar';
@@ -74,7 +75,7 @@ export function App() {
     'equipment'
   );
 
-  const [obVans] = useState(INITIAL_OB_VANS);
+  const [obVans, setObVans] = useState<OBVan[]>(INITIAL_OB_VANS);
   const [crew] = useState(INITIAL_CREW);
   const [trips] = useState(INITIAL_TRIPS);
 
@@ -291,6 +292,7 @@ export function App() {
             vans={obVans}
             crew={crew}
             trips={trips}
+            onVansChange={setObVans}
           />
         ) : (
           <>
@@ -426,3 +428,6 @@ export function App() {
 }
 
 export default App;
+
+
+
