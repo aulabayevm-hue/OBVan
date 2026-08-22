@@ -1,4 +1,4 @@
-﻿import { useState, useMemo } from 'react';
+﻿import { useState, useMemo, useEffect } from 'react';
 import type { OBVan, CrewMember, Trip } from './types/obvan';
 import { INITIAL_OB_VANS, INITIAL_CREW, INITIAL_TRIPS } from './data/mockOBVans';
 import type {
@@ -80,10 +80,32 @@ export function App() {
     INITIAL_EQUIPMENT_DATA
   );
 
-  const [obVans, setObVans] = useState<OBVan[]>(INITIAL_OB_VANS);
+  const [obVans, setObVans] = useState<OBVan[]>(() => {
+    try {
+      const saved = localStorage.getItem('obvm_ob_vans');
+      return saved ? JSON.parse(saved) as OBVan[] : INITIAL_OB_VANS;
+    } catch {
+      return INITIAL_OB_VANS;
+    }
+  });
   const [isCrewModalOpen, setIsCrewModalOpen] = useState(false);
-  const [crew, setCrew] = useState<CrewMember[]>(INITIAL_CREW);
+  const [crew, setCrew] = useState<CrewMember[]>(() => {
+    try {
+      const saved = localStorage.getItem('obvm_crew');
+      return saved ? JSON.parse(saved) as CrewMember[] : INITIAL_CREW;
+    } catch {
+      return INITIAL_CREW;
+    }
+  });
   const [trips] = useState<Trip[]>(INITIAL_TRIPS);
+
+  useEffect(() => {
+    localStorage.setItem('obvm_ob_vans', JSON.stringify(obVans));
+  }, [obVans]);
+
+  useEffect(() => {
+    localStorage.setItem('obvm_crew', JSON.stringify(crew));
+  }, [crew]);
   const [filters, setFilters] = useState<FilterState>({
     searchQuery: '',
     searchField: 'all',
@@ -443,6 +465,7 @@ export function App() {
 }
 
 export default App;
+
 
 
 
