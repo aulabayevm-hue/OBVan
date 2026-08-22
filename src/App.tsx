@@ -1,4 +1,6 @@
 ﻿import { useState, useMemo } from 'react';
+import type { OBVan, CrewMember, Trip } from './types/obvan';
+import { INITIAL_OB_VANS, INITIAL_CREW, INITIAL_TRIPS } from './data/mockOBVans';
 import type {
   EquipmentCategory,
   EquipmentItem,
@@ -9,12 +11,11 @@ import type {
   StorageLocation,
 } from './types/equipment';
 import { INITIAL_EQUIPMENT_DATA } from './data/mockEquipment';
-import type { OBVan } from './types/obvan';
-import { INITIAL_OB_VANS, INITIAL_CREW, INITIAL_TRIPS } from './data/mockOBVans';
 import { filterAndSortEquipment } from './utils/filterAndSort';
 import { FilterBar } from './components/FilterBar';
 import { EquipmentTable } from './components/EquipmentTable';
 import { EquipmentModal } from './components/EquipmentModal';
+import { CrewModal } from './components/obvan/CrewModal';
 import { OBVanDashboard } from './components/obvan/OBVanDashboard';
 import {
   exportSingleEquipmentPDF,
@@ -75,14 +76,14 @@ export function App() {
     'equipment'
   );
 
-  const [obVans, setObVans] = useState<OBVan[]>(INITIAL_OB_VANS);
-  const [crew] = useState(INITIAL_CREW);
-  const [trips] = useState(INITIAL_TRIPS);
-
   const [equipmentList, setEquipmentList] = useState<EquipmentItem[]>(
     INITIAL_EQUIPMENT_DATA
   );
 
+  const [obVans, setObVans] = useState<OBVan[]>(INITIAL_OB_VANS);
+  const [isCrewModalOpen, setIsCrewModalOpen] = useState(false);
+  const [crew, setCrew] = useState<CrewMember[]>(INITIAL_CREW);
+  const [trips] = useState<Trip[]>(INITIAL_TRIPS);
   const [filters, setFilters] = useState<FilterState>({
     searchQuery: '',
     searchField: 'all',
@@ -164,6 +165,15 @@ export function App() {
   const handleAddEquipment = (newItem: EquipmentItem) => {
     setEquipmentList((prev) => [newItem, ...prev]);
     setExpandedRowId(newItem.id);
+  };
+
+  const handleSaveCrewMember = (member: CrewMember) => {
+    setCrew((prev) => {
+      const exists = prev.some((item) => item.id === member.id);
+      return exists
+        ? prev.map((item) => (item.id === member.id ? member : item))
+        : [...prev, member];
+    });
   };
 
   const handleResetFilters = () => {
@@ -422,12 +432,22 @@ export function App() {
             (s) => s !== 'Все'
           ) as EquipmentStatus[]}
         />
-      )}
+      )}      <CrewModal
+        isOpen={isCrewModalOpen}
+        member={null}
+        onClose={() => setIsCrewModalOpen(false)}
+        onSave={handleSaveCrewMember}
+      />
     </div>
   );
 }
 
 export default App;
+
+
+
+
+
 
 
 
